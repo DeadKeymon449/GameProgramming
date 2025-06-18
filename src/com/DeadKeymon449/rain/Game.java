@@ -2,6 +2,7 @@ package com.DeadKeymon449.rain;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 
@@ -17,13 +18,13 @@ public class Game extends Canvas implements Runnable {
 	private JFrame frame;
 	private boolean running = false;
 
-	public Game() { 
-		Dimension size = new Dimension(width*scale, height*scale);
+	public Game() {
+		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
-		
+
 		frame = new JFrame();
 	}
-	
+
 	public synchronized void start() {
 		running = true;
 		thread = new Thread(this, "Display");
@@ -41,11 +42,25 @@ public class Game extends Canvas implements Runnable {
 
 	public void run() {
 		while (running == true) {
-			System.out.println("Looping...");
+			tick();
+			render();
 		}
 	}
-	
-	public static void main(String[] args) { 
+
+	private void tick() {
+
+	}
+
+	private void render() {
+		BufferStrategy bs = getBufferStrategy();
+
+		if (bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
+	}
+
+	public static void main(String[] args) {
 		Game game = new Game();
 		game.frame.setResizable(false);
 		game.frame.setTitle("Rain");
@@ -54,7 +69,7 @@ public class Game extends Canvas implements Runnable {
 		game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.frame.setLocationRelativeTo(null);
 		game.frame.setVisible(true);
-		
+
 		game.start();
 	}
 }
