@@ -10,6 +10,8 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import com.DeadKeymon449.rain.graphics.Screen;
+
 public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
@@ -17,18 +19,21 @@ public class Game extends Canvas implements Runnable {
 	public static int width = 300;
 	public static int height = width / 16 * 9;
 	public static int scale = 3;
+	
+	private Screen screen;
 
 	private Thread thread;
 	private JFrame frame;
 	private boolean running = false;
 
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	private int[] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
-	
+	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+
 	public Game() {
 		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
 
+		screen = new Screen(width, height);
 		frame = new JFrame();
 	}
 
