@@ -54,8 +54,12 @@ public class Game extends Canvas implements Runnable {
 
 	public void run() {
 		long lastTime = System.nanoTime();
+		long timer = System.currentTimeMillis();
 		final double ns = 1000000000.0 / 60.0;
 		double delta = 0.0;
+
+		int frames = 0;
+		int ticks = 0;
 
 		while (running == true) {
 			long now = System.nanoTime();
@@ -64,11 +68,21 @@ public class Game extends Canvas implements Runnable {
 
 			while (delta >= 1) {
 				tick();
+				ticks++;
 				delta--;
 			}
 
 			render();
+			frames++;
+
+			if (System.currentTimeMillis() - timer > 1000) {
+				timer += 1000;
+				frame.setTitle("Rain | ticks: " + ticks + ", fps: " + frames);
+				frames = 0;
+				ticks = 0;
+			}
 		}
+		stop();
 	}
 
 	private void tick() {
