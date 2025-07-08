@@ -6,8 +6,11 @@ public class Screen {
 
 	private int width, height;
 	public int[] pixels;
-
-	public int[] tiles = new int[64 * 64];
+	
+	public final int mapSize = 64;
+	public final int mapSizeMask = mapSize - 1;
+	
+	public int[] tiles = new int[mapSize * mapSize];
 	private Random random = new Random();
 
 	public Screen(int width, int height) {
@@ -16,7 +19,7 @@ public class Screen {
 
 		pixels = new int[width * height];
 
-		for (int i = 0; i < 64 * 64; i++) {
+		for (int i = 0; i < mapSize * mapSize; i++) {
 			tiles[i] = random.nextInt(0xffffff);
 		}
 	}
@@ -27,16 +30,21 @@ public class Screen {
 		}
 	}
 
+	int offset = 0;
+	
 	public void render() {
+		offset++;
 		for (int y = 0; y < height; y++) {
-			if (y < 0 || y >= height)
-				break;
+			int yPos = y;
+
+//			if (yPos < 0 || yPos >= height) break;
 
 			for (int x = 0; x < width; x++) {
-				if (x < 0 || x >= width)
-					break;
+				int xPos = x;
+
+//				if (xPos < 0 || xPos >= width) break;
 				
-				int tileIndex = (x >> 4) + (y >> 4) * 64;
+				int tileIndex = ((xPos >> 4) & mapSizeMask) + ((yPos >> 4) & mapSizeMask) * mapSize;
 
 				pixels[x + y * width] = tiles[tileIndex];
 			}
