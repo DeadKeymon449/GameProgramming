@@ -23,7 +23,7 @@ public class Game extends Canvas implements Runnable {
 
 	private Screen screen;
 	private Keyboard key;
-	
+
 	private Thread thread;
 	private JFrame frame;
 	private boolean running = false;
@@ -38,7 +38,7 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		frame = new JFrame();
 		key = new Keyboard();
-		
+
 		addKeyListener(key);
 	}
 
@@ -90,8 +90,18 @@ public class Game extends Canvas implements Runnable {
 		stop();
 	}
 
+	public int xPos = 0, yPos = 0;
+
 	private void tick() {
 		key.update();
+		if (key.up)
+			yPos--;
+		if (key.down)
+			yPos++;
+		if (key.left)
+			xPos--;
+		if (key.right)
+			xPos++;
 	}
 
 	private void render() {
@@ -102,7 +112,7 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 		screen.clear();
-		screen.render();
+		screen.render(xPos, yPos);
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}

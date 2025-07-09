@@ -30,14 +30,14 @@ public class Screen {
 		}
 	}
 	
-	public void render() {
+	public void render(int offsetX, int offsetY) {
 		for (int y = 0; y < height; y++) {
-			int yPos = y;
+			int yPos = y + offsetY;
 
 //			if (yPos < 0 || yPos >= height) break;
 
 			for (int x = 0; x < width; x++) {
-				int xPos = x;
+				int xPos = x + offsetX;
 
 //				if (xPos < 0 || xPos >= width) break;
 				
