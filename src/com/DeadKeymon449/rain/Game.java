@@ -11,6 +11,7 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 
 import com.DeadKeymon449.rain.graphics.Screen;
+import com.DeadKeymon449.rain.inputs.Keyboard;
 
 public class Game extends Canvas implements Runnable {
 
@@ -21,7 +22,8 @@ public class Game extends Canvas implements Runnable {
 	public static int scale = 3;
 
 	private Screen screen;
-
+	private Keyboard key;
+	
 	private Thread thread;
 	private JFrame frame;
 	private boolean running = false;
@@ -35,6 +37,9 @@ public class Game extends Canvas implements Runnable {
 
 		screen = new Screen(width, height);
 		frame = new JFrame();
+		key = new Keyboard();
+		
+		addKeyListener(key);
 	}
 
 	public synchronized void start() {
@@ -86,7 +91,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void tick() {
-
+		key.update();
 	}
 
 	private void render() {

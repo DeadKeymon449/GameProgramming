@@ -29,11 +29,8 @@ public class Screen {
 			pixels[i] = 0;
 		}
 	}
-
-	int offset = 0;
 	
 	public void render() {
-		offset++;
 		for (int y = 0; y < height; y++) {
 			int yPos = y;
 
